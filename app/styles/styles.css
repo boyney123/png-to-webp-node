@@ -1,0 +1,27 @@
+table{
+	border-collapse: collapse;
+}
+table th{
+	background:#6199df;
+	color:white;
+	border:1px solid #4d90fe;
+	padding:6px 10px;
+}
+
+table td{
+	padding: 6px 10px;
+	border: 1px solid #bbb;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.savings{
+	color:green;
+	text-align: right;
+	margin-bottom: 0;
+	font-size: 2em;
+}
+
+.header{
+	padding:0;
+}

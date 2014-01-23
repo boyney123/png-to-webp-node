@@ -1,0 +1,17 @@
+{
+  "name": "images-vs-webp",
+  "version": "0.0.1",
+  "description": "This project takes a group of images and converts them to webp format, and visualises the savings in sizes.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DB",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-webp": "0.0.3",
+    "express": "~3.4.8",
+    "walk": "~2.2.1"
+  }
+}
