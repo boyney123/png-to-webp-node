@@ -14,8 +14,8 @@
 	<div class="row">
 		<div class="col-lg-12 section header">
 		    <h1 class="section-heading">Images to WebP</h1>
-		    <p class="lead section-lead">Visually see the quality differnce between png and WebP formats and the potenial savings.</p>
-		    <h2 class="lead savings">Total Savings: 3000kb</h2>
+		    <p class="lead section-lead">Visually see the quality difference between png and WebP formats and the potential savings in kb.</p>
+		    <h2 class="lead savings">Total Savings: {{totalSavings}}kb</h2>
 	    </div>
 
 	 	<table class="col-md-12">
@@ -28,9 +28,9 @@
 		  		<tr ng-repeat="file in files">
 		  			<td><img ng-src="{{file.orgFilePath}}" alt=""/></td>
 		  			<td><img ng-src="{{file.webpFilePath}}" alt=""/></td>
-		  			<td>203kb</td>
-		  			<td>10kb</td>
-		  			<td>40kb</span></td>
+		  			<td>{{file.orgFileSize.toFixed(2)}}kb</td>
+		  			<td>{{file.webpFileSize.toFixed(2)}}kb</td>
+		  			<td>{{(file.orgFileSize - file.webpFileSize).toFixed(2)}}kb</span></td>
 		  		</tr>	
 		  	</tbody>
 	  	</table>

@@ -2,8 +2,40 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var events = require('events');
+ var walk = require('walk')
+var eventEmitter = new events.EventEmitter();
 
-var convert = require('./modules/convert.js')();
+app.use("/bower_components", express.static(__dirname + '/app/bower_components'));
+app.use("/js", express.static(__dirname + '/app/js'));
+app.use("/app/input", express.static(__dirname + '/app/input'));
+app.use("/app/tmp", express.static(__dirname + '/app/tmp'));
+app.use("/styles", express.static(__dirname + '/app/styles'));
+
+rmDir = function(dirPath) {
+      try { var files = fs.readdirSync(dirPath); }
+      catch(e) { return; }
+      if (files.length > 0)
+        for (var i = 0; i < files.length; i++) {
+          var filePath = dirPath + '/' + files[i];
+          if (fs.statSync(filePath).isFile())
+            fs.unlinkSync(filePath);
+          else
+            rmDir(filePath);
+        }
+};
+
+
+
+//create or clear the tmp folder for webp images
+try{
+    fs.mkdirSync('./app/tmp');
+}catch(e){
+    rmDir('./app/tmp');
+}
+
+//convert all the files to webp
+var convert = require('./modules/convert.js')(eventEmitter);
 convert.convertFilesToWebP();
 
 var inputData = [];
@@ -11,49 +43,40 @@ var outputData = [];
 
 //loop through files in folder and store there name and filesize.
 
-var walk = require('walk')
-    , fs = require('fs')
-    , options
-    , walker
-    ;
 
-options = {
-followLinks: false
-// directories with these keys will be skipped
-, filters: ["Temp", "_Temp", ".DS_Store"]
-};
 
-walker = walk.walk("./app/input", options);
+//wait untill files are created
+eventEmitter.on('webpFilesCreated', function(){
 
-walker.on("file", function (root, fileStats, next) {
-    inputData[fileStats.name] = fileStats.size;
-    next();
+    walker = walk.walk("./app/input");
+
+    walker.on("file", function (root, fileStats, next) {
+        if(fileStats.name.indexOf('DS_Store') <= 0){
+            var key = fileStats.name.substr(0, fileStats.name.indexOf('.png'));
+            inputData[key] = {
+                size: fileStats.size/1000,
+                path : root + "/" + fileStats.name
+            }
+        }
+        next();
+    });
+
+    wpWalker = walk.walk("./app/tmp");
+
+    wpWalker.on("file", function (root, fileStats, next) {
+        if(fileStats.name.indexOf('DS_Store') <= 0){
+            var key = fileStats.name.substr(0, fileStats.name.indexOf('.webp'));
+            outputData[key] = {
+                size: fileStats.size/1000,
+                path : root + "/" + fileStats.name
+            }
+        }
+        next();
+    });
+
 });
 
-wpWalker = walk.walk("./app/output", options);
 
-wpWalker.on("file", function (root, fileStats, next) {
-    outputData[fileStats.name] = fileStats.size;
-    next();
-});
-
-
-//TODO: parse data and return it pretty...??
-
-//I am parsing the data, maybe I need the path to each file?
-// {
-//     oringal:'path/path.png',
-//     webp:'path',
-//     orgSize:222,
-//     webpsize:222
-// }
-
-
-app.use("/bower_components", express.static(__dirname + '/app/bower_components'));
-app.use("/js", express.static(__dirname + '/app/js'));
-app.use("/input", express.static(__dirname + '/app/input'));
-app.use("/output", express.static(__dirname + '/app/output'));
-app.use("/styles", express.static(__dirname + '/app/styles'));
 
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/app/index.html');
@@ -61,19 +84,19 @@ app.get('/', function(req, res) {
 
 app.get('/getFileData', function(req, res) {
 
-    var data = [
-    {
-        orgFilePath:'./input/bogdan.png',
-        orgFileSize: 12000,
-        webpFilePath:'./output/bogdan.webp',
-        webpFileSize: 21222
-    }, {
-        orgFilePath:'./input/Vassily.png',
-        orgFileSize: 12000,
-        webpFilePath:'./output/Vassily.webp',
-        webpFileSize: 21222
-    }];
+   var data = [];
 
+   for (var key in inputData){
+    if(outputData[key]){
+       data.push({
+            orgFilePath: inputData[key].path,
+            orgFileSize: inputData[key].size,
+            webpFilePath: outputData[key].path,
+            webpFileSize: outputData[key].size
+        }); 
+    }
+        
+   }
 
     res.send(data);
 });
