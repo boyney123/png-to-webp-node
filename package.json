@@ -6,14 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "DB",
+  "author": "DaveBoyne",
   "license": "BSD-2-Clause",
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-webp": "0.0.3",
-    "express": "~3.4.8",
-    "walk": "~2.2.1"
-  },
   "dependencies": {
     "express": "~3.4.8",
     "walk": "~2.2.1",
