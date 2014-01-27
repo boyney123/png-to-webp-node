@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var events = require('events');
- var walk = require('walk')
+var walk = require('walk')
 var eventEmitter = new events.EventEmitter();
 
 app.use("/bower_components", express.static(__dirname + '/app/bower_components'));

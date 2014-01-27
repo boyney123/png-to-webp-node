@@ -23,6 +23,7 @@ table td img{
 .savings{
 	color:green;
 	text-align: right;
+	margin-top:0;
 	margin-bottom: 0;
 	font-size: 2em;
 }
@@ -30,3 +31,4 @@ table td img{
 .header{
 	padding:0;
 }
+
