@@ -1,13 +1,12 @@
-var phonecatApp = angular.module('phonecatApp', []);
+var webpApp = angular.module('webpApp', []);
  
-phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {
+webpApp.controller('FileCtrl', function ($scope, $http) {
+
+  $scope.compressImageSize = true;
+
   $http.get('/getFileData').success(function(data) {
-    
     $scope.files = data;
-
     $scope.totalSavings = calculateTotalSavings(data);
-
-
   });
 
   calculateTotalSavings = function(data){
@@ -18,6 +17,4 @@ phonecatApp.controller('PhoneListCtrl', function ($scope, $http) {
   	return (totalSavings).toFixed(2);
   }
 
- 
-  $scope.orderProp = 'age';
 });

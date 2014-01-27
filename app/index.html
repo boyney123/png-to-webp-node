@@ -1,6 +1,6 @@
-<html ng-app="phonecatApp">
+<html ng-app="webpApp">
 <head>
-	<title></title>
+	<title>Png to Webp</title>
 	<script type="text/javascript" src="./bower_components/angular/angular.js"></script>
 	<script type="text/javascript" src="./bower_components/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/controllers.js"></script>
@@ -8,24 +8,20 @@
 	<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="./styles/styles.css">
 </head>
-<body ng-controller="PhoneListCtrl">
+<body ng-controller="FileCtrl">
 
  <div class="container">
 
 	<div class="row">
 
-
-		
-
-
 		<div class="col-lg-12 section header">
 		    <h1 class="section-heading">Images to WebP</h1>
 		    <p class="lead section-lead">Visually see the quality difference between png and WebP formats and the potential savings in kb.</p>
 		    <h2 class="lead savings">Total Savings: {{totalSavings}}kb</h2>
+		    <small class="pull-right">Scale Image Down: <input type="checkbox" ng-model="compressImageSize"></small>
 	    </div>
 
-
-	 	<table class="col-md-12">
+	 	<table class="col-md-12" ng-class="{'compressImageSize': compressImageSize}">
 		  	<thead>
 		  		<tr>
 		  			<th>Original File</th><th>Webp File</th><th>Png Size</th><th>Webp Size</th><th>Savings</th></th>

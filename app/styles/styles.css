@@ -16,10 +16,6 @@ table td{
 	text-align: center;
 }
 
-table td img{
-	max-width:100%;
-}
-
 .savings{
 	color:green;
 	text-align: right;
@@ -30,5 +26,9 @@ table td img{
 
 .header{
 	padding:0;
+}
+
+table.compressImageSize td img{
+	max-width: 100%;
 }
 

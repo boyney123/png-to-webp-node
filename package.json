@@ -13,5 +13,15 @@
     "grunt-webp": "0.0.3",
     "express": "~3.4.8",
     "walk": "~2.2.1"
-  }
+  },
+  "dependencies": {
+    "express": "~3.4.8",
+    "walk": "~2.2.1",
+    "webp-bin": "~0.1.4"
+  },
+  "keywords": [
+    "webp",
+    "png",
+    "convert"
+  ]
 }
