@@ -11,6 +11,9 @@ png-to-webp-node
 
 This project is a simple node application that will convert .png images into WebP format and display the difference in kb. 
 
+![alt tag](http://oi39.tinypic.com/2ni7fpz)
+
+
 ## Setup
 Clone the project and install the node dependencies.
 
@@ -21,7 +24,10 @@ npm install
 ## Changing the images
 Add your .png files to ./app/assets folder and start the node application. Navigate to localhost:3000 to see your images as WebP.
 
-## Notes
+## Known issues
+If your having problems viewing your images. Try refreshing the page a few times as the conversion to WebP may take a second or two.
+
+#### Notes
 
 This project is a proof of concept to see the difference in filesize between .png files and WebP formats.
 The same can be done with the Grunt but node was used as an experiment.
